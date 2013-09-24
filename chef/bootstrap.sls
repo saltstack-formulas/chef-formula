@@ -39,7 +39,6 @@ bootstrap_chef:
   cmd:
     - run
     - name: curl -L https://www.opscode.com/chef/install.sh | bash
-    - stateful: True
     - require:
       - pkg: curl
 
