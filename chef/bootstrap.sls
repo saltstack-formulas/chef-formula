@@ -12,11 +12,17 @@ chef_config:
   file:
     - managed
     - name: {{ chef.confdir }}/client.rb
-    - contents_pillar: 'chef:client.rb'
+    - contents: |
+        log_level {{ salt['pillar.get']('chef:client_rb:server_url', ':info') }}
+        log_location {{ salt['pillar.get']('chef:client_rb:server_url', 'STDOUT') }}
+        chef_server_url {{ salt['pillar.get']('chef:client_rb:server_url') }}
+        validation_client_name {{ salt['pillar.get']('chef:client_rb:server_url', '"chef-validator"') }}
+        validation_key "{{ chef.confdir }}/validation.pem"
+        {{ salt['pillar.get']('chef:client_rb:additional_config') | indent(8) }}
     - require:
       - file: chef_confdir
 
-chef_validator:
+chef_validation:
   file:
     - managed
     - name: {{ chef.confdir }}/validation.pem
@@ -55,7 +61,7 @@ chef_client_pem:
     - require:
       - cmd: initial_chef_run
 
-chef_validator_rm:
+chef_validation_rm:
   file:
     - absent
     - name: {{ chef.confdir }}/validation.pem

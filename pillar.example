@@ -3,13 +3,18 @@ chef:
     client: chef-client
     confdir: /etc/chef
 
+# Required params are server_url and validation_pem
 chef:
-  client.rb: |
-    log_level :info
-    log_location STDOUT
-    chef_server_url "https://mychefserver.example.com/"
-    validation_client_name "chef-validator"
-    validation_key "/etc/chef/validation.pem"
+  client_rb:
+    server_url: https://mychefserver.example.com/
+    log_level: :info
+    log_location: STDOUT
+    chef_server_url: https://mychefserver.example.com/
+    validation_client_name: chef-validator
+    validation_key: {{ chef.confdir }}/validation.pem
+    additional_config: |
+      Any additional lines here
+      as a multiline string.
   validation_pem: |
     -----BEGIN RSA PRIVATE KEY-----
     key goes inline here
