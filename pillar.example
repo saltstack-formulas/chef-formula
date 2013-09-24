@@ -1,0 +1,16 @@
+chef:
+  lookup:
+    client: chef-client
+    confdir: /etc/chef
+
+chef:
+  client.rb: |
+    log_level :info
+    log_location STDOUT
+    chef_server_url "https://mychefserver.example.com/"
+    validation_client_name "chef-validator"
+    validation_key "/etc/chef/validation.pem"
+  validation_pem: |
+    -----BEGIN RSA PRIVATE KEY-----
+    key goes inline here
+    -----END RSA PRIVATE KEY-----
