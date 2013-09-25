@@ -26,7 +26,8 @@ chef_validation:
   file:
     - managed
     - name: {{ chef.confdir }}/validation.pem
-    - contents_pillar: 'chef:validation_pem'
+    - contents: |
+        {{ salt['pillar.get']('chef:validation_pem') | indent(8) }}
     - require:
       - file: chef_confdir
 
