@@ -52,6 +52,7 @@ initial_chef_run:
     - require:
       - cmd: bootstrap_chef
       - file: chef_config
+      - file: chef_validation
 
 # Remove the validation.pem file if the inital run successfully produced
 # ``client.pem``
