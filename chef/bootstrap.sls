@@ -15,7 +15,7 @@ chef_config:
     - contents: |
         log_level {{ salt['pillar.get']('chef:client_rb:log_level', ':info') }}
         log_location {{ salt['pillar.get']('chef:client_rb:log_location', 'STDOUT') }}
-        chef_server_url "{{ salt['pillar.get']('chef:client_rb:server_url') }}"
+        chef_server_url "{{ salt['pillar.get']('chef:client_rb:chef_server_url') }}"
         validation_client_name "{{ salt['pillar.get']('chef:client_rb:validation_client_name', 'chef-validator') }}"
         validation_key "{{ chef.confdir }}/validation.pem"
         {{ salt['pillar.get']('chef:client_rb:additional_config') | indent(8) }}
