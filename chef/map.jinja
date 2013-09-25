@@ -1,4 +1,4 @@
-{% set chef = salt['grains.filter_by']({
+{% set chef = {
     'Debian': {
         'client': 'chef-client',
         'confdir': '/etc/chef',
@@ -7,4 +7,4 @@
         'client': 'chef-client',
         'confdir': '/etc/chef',
     },
-}, merge=salt['pillar.get']('chef:lookup')) %}
+}.get(grains.os_family) %}
