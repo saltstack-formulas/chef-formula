@@ -2,6 +2,23 @@
 # file paths. Values can be overridden via Pillar.
 {% from "chef/map.jinja" import chef with context %}
 
+{% if salt['pillar.get']('chef:ntp_sync') == True %}
+include:
+  - ntp.ntpdate
+
+ntp_sync:
+  cmd:
+    - run
+    - name: ntpdate -u {{ salt['pillar.get']('ntp:servers', [
+        '0.north-america.pool.ntp.org',
+        '1.north-america.pool.ntp.org',
+        '2.north-america.pool.ntp.org',
+        '3.north-america.pool.ntp.org',
+      ])|join(' ') }}
+    - require:
+      - pkg: ntpdate
+{% endif %}
+
 # Put the ``client.rb`` file in place
 chef_confdir:
   file:
@@ -53,6 +70,9 @@ initial_chef_run:
       - cmd: bootstrap_chef
       - file: chef_config
       - file: chef_validation
+{% if salt['pillar.get']('chef:ntp_sync') == True %}
+      - cmd: ntp_sync
+{% endif %}
 
 # Remove the validation.pem file if the inital run successfully produced
 # ``client.pem``

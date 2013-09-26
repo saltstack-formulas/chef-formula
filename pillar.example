@@ -5,6 +5,8 @@ chef:
 
 # Required params are chef_server_url, validation_pem, and validation_client_name
 chef:
+  # Sync the system clock via ntp before attempting to call chef-client
+  ntp_sync: False
   client_rb:
     chef_server_url: https://mychefserver.example.com/
     log_level: :info
