@@ -40,7 +40,7 @@ bootstrap_chef:
   cmd:
     - run
     - name: curl -L https://www.opscode.com/chef/install.sh | bash
-    - unless: {{ chef.client }}
+    - unless: which {{ chef.client }}
     - require:
       - pkg: curl
 
