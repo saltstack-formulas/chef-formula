@@ -1,0 +1,7 @@
+'salt/cloud/{0}/destroying'.format(name)
+where name is the hostname of the vm
+and salt/cloud/{0}/destroyed'.format(name)3:34 PM
+
+reactor:
+  - destroyed:
+    - /srv/salt/chef/deprovision.sls
