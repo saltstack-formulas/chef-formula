@@ -1,5 +1,5 @@
 # This script is to be called from the reactor system
-{% set hostname = data['id'] %}
+{% set hostname = data['name'] %}
 
 delete_node:
   cmd.cmd.run:
