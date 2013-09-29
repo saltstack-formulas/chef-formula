@@ -5,8 +5,6 @@ chef:
 
 # Required params are chef_server_url, validation_pem, and validation_client_name
 chef:
-  # The salt minion ID of the server that is acting as the main Chef server
-  main_server: minion_id
   # Sync the system clock via ntp before attempting to call chef-client
   ntp_sync: False
   client_rb:

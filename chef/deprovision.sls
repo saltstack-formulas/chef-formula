@@ -3,12 +3,12 @@
 
 delete_node:
   cmd.cmd.run:
-    - tgt: {{ salt['pillar.get']('chef:main_server') }}
+    - tgt: chef_main # id of chef server
     - arg:
       - knife node delete {{ hostname }} -y
 
 delete_client:
   cmd.cmd.run:
-    - tgt: {{ salt['pillar.get']('chef:main_server') }}
+    - tgt: chef_main # id of chef server
     - arg:
       - knife client delete {{ hostname }} -y 
