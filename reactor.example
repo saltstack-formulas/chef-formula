@@ -1,3 +1,3 @@
 reactor:
-  - 'salt.cloud.destroy':
+  - 'salt/cloud/*/destroying':
     - /srv/salt/chef/deprovision.sls
