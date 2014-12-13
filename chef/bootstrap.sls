@@ -7,8 +7,7 @@ include:
   - ntp.ntpdate
 
 ntp_sync:
-  cmd:
-    - run
+  cmd.run:
     - name: ntpdate -u {{ salt['pillar.get']('ntp:servers', [
         '0.north-america.pool.ntp.org',
         '1.north-america.pool.ntp.org',
@@ -21,13 +20,11 @@ ntp_sync:
 
 # Put the ``client.rb`` file in place
 chef_confdir:
-  file:
-    - directory
+  file.directory:
     - name: {{ chef.confdir }}
 
 chef_config:
-  file:
-    - managed
+  file.managed:
     - name: {{ chef.confdir }}/client.rb
     - contents: |
         log_level {{ salt['pillar.get']('chef:client_rb:log_level', ':info') }}
@@ -40,8 +37,7 @@ chef_config:
       - file: chef_confdir
 
 chef_validation:
-  file:
-    - managed
+  file.managed:
     - name: {{ chef.confdir }}/validation.pem
     - contents: |
         {{ salt['pillar.get']('chef:validation_pem') | indent(8) }}
@@ -50,12 +46,10 @@ chef_validation:
 
 # Download and execute the Chef bootstrap bash script
 curl:
-  pkg:
-    - installed
+  pkg.installed: []
 
 bootstrap_chef:
-  cmd:
-    - run
+  cmd.run:
     - name: curl -L https://www.opscode.com/chef/install.sh | bash
     - unless: which {{ chef.client }}
     - require:
@@ -63,8 +57,7 @@ bootstrap_chef:
 
 # Do the initial Chef client run
 initial_chef_run:
-  cmd:
-    - run
+  cmd.run:
     - name: chef-client
     - require:
       - cmd: bootstrap_chef
@@ -77,15 +70,13 @@ initial_chef_run:
 # Remove the validation.pem file if the inital run successfully produced
 # ``client.pem``
 chef_client_pem:
-  file:
-    - exists
+  file.exists:
     - name: {{ chef.confdir }}/client.pem
     - require:
       - cmd: initial_chef_run
 
 chef_validation_rm:
-  file:
-    - absent
+  file.absent:
     - name: {{ chef.confdir }}/validation.pem
     - require:
       - file: chef_client_pem
