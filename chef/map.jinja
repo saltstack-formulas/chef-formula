@@ -1,10 +1,6 @@
-{% set chef = {
-    'Debian': {
+{% set chef = salt['grains.filter_by']({
+    'default': {
         'client': 'chef-client',
-        'confdir': '/etc/chef',
+        'bootstrap_command': 'curl -L https://www.opscode.com/chef/install.sh | bash'
     },
-    'RedHat': {
-        'client': 'chef-client',
-        'confdir': '/etc/chef',
-    },
-}.get(grains.os_family) %}
+}, merge=salt['pillar.get']('chef:lookup')) %}
