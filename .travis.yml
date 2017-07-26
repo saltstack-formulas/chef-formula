@@ -1,0 +1,29 @@
+---
+sudo: required
+dist: trusty
+language: generic
+cache: bundler
+addons:
+  apt:
+    sources:
+      - chef-current-trusty
+    packages:
+      - chefdk
+services: docker
+env:
+  matrix:
+    - INSTANCE=bootstrap-centos-7
+    - INSTANCE=bootstrap-centos-6
+    - INSTANCE=bootstrap-ubuntu-1604
+    - INSTANCE=bootstrap-ubuntu-1404
+before_script:
+  - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
+  - eval "$(/opt/chefdk/bin/chef shell-init bash)"
+  - /opt/chefdk/embedded/bin/chef gem install kitchen-salt
+  - /opt/chefdk/embedded/bin/chef gem install kitchen-docker
+  - /opt/chefdk/embedded/bin/chef --version
+script: KITCHEN_LOCAL_YAML=.kitchen.docker.yml kitchen verify ${INSTANCE}
+after_script:
+  - docker images
+  - docker ps -a
+  - cat .kitchen/logs/kitchen.log
