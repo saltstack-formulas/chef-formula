@@ -19,4 +19,4 @@ chef:
   validation_pem: |
     -----BEGIN RSA PRIVATE KEY-----
     key goes inline here
-    -----END RSA PRIVATE KEY-----
+    

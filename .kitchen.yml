@@ -1,0 +1,34 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: salt_solo
+  formula: chef
+  log_level: error
+  pillars:
+    chef:
+      client_rb:
+        local_mode: false
+
+  state_top:
+    base:
+      '*':
+        - chef.bootstrap
+        - chef.run
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: centos-6.9
+  - name: centos-7.3
+  - name: ubuntu-14.04
+    provisioner:
+      salt_install: apt
+  - name: ubuntu-16.04
+    provisioner:
+      salt_install: apt
+
+suites:
+  - name: bootstrap
