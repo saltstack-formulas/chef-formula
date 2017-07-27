@@ -1,6 +1,6 @@
-{% set chef = salt['grains.filter_by']({
-    'default': {
-        'client': 'chef-client',
-        'bootstrap_command': 'curl -L https://www.opscode.com/chef/install.sh | bash'
-    },
-}, merge=salt['pillar.get']('chef:lookup')) %}
+{% import_yaml "chef/defaults.yml" as default_settings %}
+{% set chef = salt['pillar.get'](
+    'chef',
+    default=default_settings.chef,
+    merge=True)
+%}

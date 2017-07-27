@@ -9,13 +9,13 @@ provisioner:
   pillars:
     chef:
       client_rb:
-        local_mode: false
+        local_mode: true
 
   state_top:
     base:
       '*':
+        - chef.install
         - chef.bootstrap
-        - chef.run
 
 verifier:
   name: inspec
