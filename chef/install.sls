@@ -3,7 +3,7 @@
 curl:
   pkg.installed: []
 
-install_chef:
+install-chef:
   cmd.run:
     - name: {{ chef.bootstrap_command }}
     - unless: which chef-client

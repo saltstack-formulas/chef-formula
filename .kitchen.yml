@@ -7,9 +7,19 @@ provisioner:
   formula: chef
   log_level: error
   pillars:
-    chef:
-      client_rb:
-        local_mode: true
+    top.sls:
+      base:
+        '*':
+          - chef
+    chef.sls:
+      chef:
+        validation_pem: |
+          -----BEGIN RSA PRIVATE KEY-----
+          key goes inline here
+          -----END RSA PRIVATE KEY-----
+        client_rb:
+          log_level: info
+          local_mode: true
 
   state_top:
     base:

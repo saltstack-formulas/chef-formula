@@ -1,12 +1,12 @@
-{% from "chef/map.jinja" import chef_config with context %}
-log_level {% client_rb['log_level'] or ':info' %}
-log_location {% client_rb['log_location'] or 'STDOUT' %}
-
-{% if client_rb['local_mode'] && client_rb['local_mode'] == True -%}
+{%- from "chef/map.jinja" import chef with context %}
+{%- set client_rb = chef.client_rb %}
+log_level "{{ client_rb['log_level'] }}"
+log_location {{ client_rb['log_location'] }}
+{%- if client_rb['local_mode'] and client_rb['local_mode'] == True %}
 chef_zero.enabled true
 local_mode true
-{% else -%}
-chef_server_url "{% client_rb['chef_server_url'] %}"
-validation_client_name "{% client_rb['validation_client_name'] or 'chef-validator' %}"
-validation_key "{% chef_config.validation_file %}"
-{% endif -%}
+{%- else %}
+chef_server_url "{{ client_rb['chef_server_url'] }}"
+validation_client_name "{{ client_rb['validation_client_name'] }}"
+validation_key "{{ chef.validation_file }}"
+{%- endif %}

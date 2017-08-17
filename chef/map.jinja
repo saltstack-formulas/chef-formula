@@ -1,6 +1,2 @@
-{% import_yaml "chef/defaults.yml" as default_settings %}
-{% set chef = salt['pillar.get'](
-    'chef',
-    default=default_settings.chef,
-    merge=True)
-%}
+{% import_yaml "chef/defaults.yml" as defaults %}
+{% set chef = salt['pillar.get']('chef', default=defaults.chef, merge=True) %}
