@@ -20,7 +20,6 @@ provisioner:
         client_rb:
           log_level: info
           local_mode: true
-
   state_top:
     base:
       '*':
@@ -41,4 +40,4 @@ platforms:
       salt_install: apt
 
 suites:
-  - name: bootstrap
+  - name: default
