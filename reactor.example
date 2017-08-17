@@ -1,3 +1,0 @@
-reactor:
-  - 'salt/cloud/*/destroying':
-    - /srv/salt/chef/deprovision.sls

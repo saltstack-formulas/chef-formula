@@ -1,0 +1,8 @@
+chef:
+  bootstrap_command: "curl -L https://www.opscode.com/chef/install.sh | bash"
+  config_file: "/etc/chef/client.rb"
+  validation_file: "/etc/chef/validation.pem"
+  client_rb:
+    log_level: ":info"
+    log_location: STDOUT
+    validation_client_name: chef-validator

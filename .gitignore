@@ -1,0 +1,6 @@
+.vagrant/
+.kitchen/
+.bundle/
+bin/
+vendor/
+tmp/

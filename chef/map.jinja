@@ -1,10 +1,2 @@
-{% set chef = {
-    'Debian': {
-        'client': 'chef-client',
-        'confdir': '/etc/chef',
-    },
-    'RedHat': {
-        'client': 'chef-client',
-        'confdir': '/etc/chef',
-    },
-}.get(grains.os_family) %}
+{% import_yaml "chef/defaults.yml" as defaults %}
+{% set chef = salt['pillar.get']('chef', default=defaults.chef, merge=True) %}
